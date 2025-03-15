@@ -1,15 +1,18 @@
 package com.example.chovypilled.amadeus_kt
 
+import android.content.SharedPreferences
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
-import com.example.chovypilled.amadeus_kt.databinding.ActivityMainBinding
+import androidx.preference.PreferenceManager
 
 class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val kurisu: ImageView = findViewById(R.id.imageView_kurisu)
+        val subBackground: ImageView = findViewById(R.id.imageView_subtitles)
+        val settings: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+    }
 }

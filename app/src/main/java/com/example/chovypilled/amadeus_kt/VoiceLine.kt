@@ -8,7 +8,6 @@ class VoiceLine (
     private val subtitle: Int
 )
 {
-
     fun getId(): Int { return id }
     fun getMood(): Int { return mood }
     fun getSubtitle(): Int { return subtitle }
