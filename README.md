@@ -6,10 +6,14 @@ This is a fork of <a href=https://github.com/Yink>Yink's</a> Amadeus project, pl
 Now that all that is out of the way, here are my main intentions:
 - Rewrite EVERYTHING in Kotlin
 - Update for newer Android devices, replacing deprecated features
-- Add support for different screen resolutions
-- Whatever "upgrades" I come up with down the line.
+- Add support for different screen resolutions and landscape orientation
 
-No, I don't intend to plug an LLM into this.
+Things I intend to work on later:
+- Implement text input
+- Improve on assistant features (launching apps, setting alarms/timers)
+- Whatever other "upgrades" I come up with down the line.
+
+No, I don't intend to plug an LLM into this. LLMs never play characters well and I think using one would be disrespectful to Kurisu.
   
 Everything below is the original project's README.md, as it was on 2025/03/14.
 
