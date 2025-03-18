@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         val kurisu: ImageView = findViewById(R.id.imageView_kurisu)
         val subBackground: ImageView = findViewById(R.id.imageView_subtitles)
         val settings: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.RECORD_AUDIO), 1)
+        //ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.RECORD_AUDIO), 1)
         Amadeus.speak(voiceLines[VoiceLine.Line.HELLO]!!, this)
     }
 }
