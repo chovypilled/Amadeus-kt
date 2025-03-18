@@ -1,10 +1,16 @@
 # Note from me, chovypilled
-This is a fork of <a href=https://github.com/Yink>Yink's</a> Amadeus project, planned to be rewritten in Kotlin. As it was for him, this is just a side project so I might take longer than expected. The reason I didn't fork the original repository is because the entire codebase is hideously outdated by now and working on it would prove far too difficult. Credit for the original project goes to <a href=https://github.com/Yink>Yink</a> and I am in no way pretending I came up with the idea of an Amadeus Android app.
+This is a remake/reimagining of <a href=https://github.com/Yink>Yink's</a> Amadeus project written in Kotlin. As it was for him, this is just a side project so I might take longer than expected.   
+  
+ The reason I didn't fork the original repository directly is because the entire codebase is hideously outdated by now and working on it would prove far too difficult. 
+ 
+ No, I don't intend to plug an LLM into this. LLMs never play characters well and I think using one would be disrespectful to Kurisu.
+ 
+ Credit for the original project goes to <a href=https://github.com/Yink>Yink</a> and I am in no way pretending I came up with the idea of an Amadeus Android app.
 
 <a href=https://github.com/Yink/Amadeus> Link to the original project </a>
 
 Now that all that is out of the way, here are my main intentions:
-- Rewrite EVERYTHING in Kotlin
+- Rewrite most of it in Kotlin
 - Update for newer Android devices, replacing deprecated features
 - Add support for different screen resolutions and landscape orientation
 
@@ -12,8 +18,6 @@ Things I intend to work on later:
 - Implement text input
 - Improve on assistant features (launching apps, setting alarms/timers)
 - Whatever other "upgrades" I come up with down the line.
-
-No, I don't intend to plug an LLM into this. LLMs never play characters well and I think using one would be disrespectful to Kurisu.
   
 Everything below is the original project's README.md, as it was on 2025/03/14.
 
