@@ -1,6 +1,7 @@
 package com.example.chovypilled.amadeus_kt
 
 import android.speech.tts.Voice
+import android.util.Log
 
 class VoiceLine (
     private val id: Int,
@@ -33,7 +34,7 @@ class VoiceLine (
 
     class Line {
         companion object {
-            val voiceLines = arrayOfNulls<VoiceLine>(40)
+            val voiceLines = arrayOfNulls<VoiceLine>(45)
 
             const val HELLO: Int = 0
             const val DAGA_KOTOWARU: Int = 1
@@ -82,75 +83,80 @@ class VoiceLine (
             const val PERVERT_IDIOT: Int = 44
 
             fun getLines(): Array<VoiceLine?> {
+                try {
+                    // Time machine-related lines
+                    voiceLines[TM_NONSENSE] = VoiceLine(R.raw.tm_nonsense, Mood.DISAPPOINTED, R.string.line_tm_nonsense)
+                    voiceLines[TM_NO_EVIDENCE] = VoiceLine(R.raw.tm_scientist_no_evidence, Mood.NORMAL, R.string.line_tm_scientist_no_evidence)
+                    voiceLines[TM_DONT_KNOW] = VoiceLine(R.raw.tm_we_dont_know, Mood.NORMAL, R.string.line_tm_we_dont_know)
+                    voiceLines[TM_YOU_SAID] = VoiceLine(R.raw.tm_you_said, Mood.SIDED_WORRIED, R.string.line_tm_you_said)
+                    voiceLines[TM_NOT_POSSIBLE] = VoiceLine(R.raw.tm_not_possible, Mood.DISAPPOINTED, R.string.line_tm_not_possible)
 
-                // Time machine-related lines
-                voiceLines[TM_NONSENSE] = VoiceLine(R.raw.tm_nonsense, Mood.DISAPPOINTED, R.string.line_tm_nonsense)
-                voiceLines[TM_NO_EVIDENCE] = VoiceLine(R.raw.tm_scientist_no_evidence, Mood.NORMAL, R.string.line_tm_scientist_no_evidence)
-                voiceLines[TM_DONT_KNOW] = VoiceLine(R.raw.tm_we_dont_know, Mood.NORMAL, R.string.line_tm_we_dont_know)
-                voiceLines[TM_YOU_SAID] = VoiceLine(R.raw.tm_you_said, Mood.SIDED_WORRIED, R.string.line_tm_you_said)
-                voiceLines[TM_NOT_POSSIBLE] = VoiceLine(R.raw.tm_not_possible, Mood.DISAPPOINTED, R.string.line_tm_not_possible)
+                    //Disappointed/sad
+                    voiceLines[HOPELESS] = VoiceLine(R.raw.this_guy_hopeless, Mood.DISAPPOINTED, R.string.line_this_guy_hopeless)
 
-                //Disappointed/sad
-                voiceLines[HOPELESS] = VoiceLine(R.raw.this_guy_hopeless, Mood.DISAPPOINTED, R.string.line_this_guy_hopeless)
+                    voiceLines[SORRY] = VoiceLine(R.raw.sorry, Mood.SAD, R.string.line_sorry)
 
-                voiceLines[SORRY] = VoiceLine(R.raw.sorry, Mood.SAD, R.string.line_sorry)
+                    //Annoyed/angry/pissed
+                    voiceLines[DAGA_KOTOWARU] = VoiceLine(R.raw.daga_kotowaru, Mood.ANNOYED, R.string.line_but_i_refuse)
+                    voiceLines[CHRISTINA] = VoiceLine(R.raw.christina, Mood.ANNOYED, R.string.line_christina)
 
-                //Annoyed/angry/pissed
-                voiceLines[DAGA_KOTOWARU] = VoiceLine(R.raw.daga_kotowaru, Mood.ANNOYED, R.string.line_but_i_refuse)
-                voiceLines[CHRISTINA] = VoiceLine(R.raw.christina, Mood.ANNOYED, R.string.line_christina)
+                    voiceLines[DEVILISH_PERVERT] = VoiceLine(R.raw.devilish_pervert, Mood.ANGRY, R.string.line_devilish_pervert)
+                    voiceLines[NO_TINA] = VoiceLine(R.raw.dont_add_tina, Mood.ANGRY, R.string.line_dont_add_tina)
+                    voiceLines[DONT_CALL_ME_THAT] = VoiceLine(R.raw.dont_call_me_like_that, Mood.ANGRY, R.string.line_dont_call_me_like_that)
+                    voiceLines[PERVERT_IDIOT] = VoiceLine(R.raw.pervert_idot_wanttodie, Mood.ANGRY, R.string.line_pervert_idiot_wanttodie)
 
-                voiceLines[DEVILISH_PERVERT] = VoiceLine(R.raw.devilish_pervert, Mood.ANGRY, R.string.line_devilish_pervert)
-                voiceLines[NO_TINA] = VoiceLine(R.raw.dont_add_tina, Mood.ANGRY, R.string.line_dont_add_tina)
-                voiceLines[DONT_CALL_ME_THAT] = VoiceLine(R.raw.dont_call_me_like_that, Mood.ANGRY, R.string.line_dont_call_me_like_that)
-                voiceLines[PERVERT_IDIOT] = VoiceLine(R.raw.pervert_idot_wanttodie, Mood.ANGRY, R.string.line_pervert_idiot_wanttodie)
+                    voiceLines[PERVERT_CONFIRMED] = VoiceLine(R.raw.pervert_confirmed, Mood.PISSED, R.string.line_pervert_confirmed)
+                    voiceLines[WHY_CHRISTINA] = VoiceLine(R.raw.why_christina, Mood.PISSED, R.string.line_why_christina)
+                    voiceLines[WHO_IS_CHRISTINA] = VoiceLine(R.raw.who_the_hell_christina, Mood.PISSED, R.string.line_who_the_hell_christina)
+                    voiceLines[SHOULD_CHRISTINA] = VoiceLine(R.raw.should_christina, Mood.PISSED, R.string.line_should_christina)
 
-                voiceLines[PERVERT_CONFIRMED] = VoiceLine(R.raw.pervert_confirmed, Mood.PISSED, R.string.line_pervert_confirmed)
-                voiceLines[WHY_CHRISTINA] = VoiceLine(R.raw.why_christina, Mood.PISSED, R.string.line_why_christina)
-                voiceLines[WHO_IS_CHRISTINA] = VoiceLine(R.raw.who_the_hell_christina, Mood.PISSED, R.string.line_who_the_hell_christina)
-                voiceLines[SHOULD_CHRISTINA] = VoiceLine(R.raw.should_christina, Mood.PISSED, R.string.line_should_christina)
+                    //Indifferent/normal
+                    voiceLines[I_GUESS] = VoiceLine(R.raw.i_guess, Mood.INDIFFERENT, R.string.line_i_guess)
+                    voiceLines[GAH] = VoiceLine(R.raw.gah, Mood.INDIFFERENT, R.string.line_gah)
+                    voiceLines[MEMORY_COMPLEXITY] = VoiceLine(R.raw.memory_complex, Mood.INDIFFERENT, R.string.line_memory_complex)
+                    voiceLines[SECRET_DIARY] = VoiceLine(R.raw.secret_diary, Mood.INDIFFERENT, R.string.line_secret_diary)
+                    voiceLines[MODIFYING_MEMORIES] = VoiceLine(R.raw.modifying_memories_impossible, Mood.INDIFFERENT, R.string.line_modifying_memories_impossible)
 
-                //Indifferent/normal
-                voiceLines[I_GUESS] = VoiceLine(R.raw.i_guess, Mood.INDIFFERENT, R.string.line_i_guess)
-                voiceLines[GAH] = VoiceLine(R.raw.gah, Mood.INDIFFERENT, R.string.line_gah)
-                voiceLines[MEMORY_COMPLEXITY] = VoiceLine(R.raw.memory_complex, Mood.INDIFFERENT, R.string.line_memory_complex)
-                voiceLines[SECRET_DIARY] = VoiceLine(R.raw.secret_diary, Mood.INDIFFERENT, R.string.line_secret_diary)
-                voiceLines[MODIFYING_MEMORIES] = VoiceLine(R.raw.modifying_memories_impossible, Mood.INDIFFERENT, R.string.line_modifying_memories_impossible)
+                    voiceLines[SENPAI_WHO] = VoiceLine(R.raw.senpai_who_is_this, Mood.NORMAL, R.string.line_senpai_who_is_this)
+                    voiceLines[HUMANS_SOFTWARE] = VoiceLine(R.raw.humans_software, Mood.NORMAL, R.string.line_humans_software)
 
-                voiceLines[SENPAI_WHO] = VoiceLine(R.raw.senpai_who_is_this, Mood.NORMAL, R.string.line_senpai_who_is_this)
-                voiceLines[HUMANS_SOFTWARE] = VoiceLine(R.raw.humans_software, Mood.NORMAL, R.string.line_humans_software)
+                    //Side/worried/pleasant
+                    voiceLines[SOUNDS_TOUGH] = VoiceLine(R.raw.sounds_tough, Mood.SIDE, R.string.line_sounds_tough)
+                    voiceLines[SENPAI_QUESTION] = VoiceLine(R.raw.senpai_question, Mood.SIDE, R.string.line_senpai_question)
+                    voiceLines[SENPAI_QUESTIONMARK] = VoiceLine(R.raw.senpai_questionmark, Mood.SIDE, R.string.line_senpai_question_mark)
 
-                //Side/worried/pleasant
-                voiceLines[SOUNDS_TOUGH] = VoiceLine(R.raw.sounds_tough, Mood.SIDE, R.string.line_sounds_tough)
-                voiceLines[SENPAI_QUESTION] = VoiceLine(R.raw.senpai_question, Mood.SIDE, R.string.line_senpai_question)
-                voiceLines[SENPAI_QUESTIONMARK] = VoiceLine(R.raw.senpai_questionmark, Mood.SIDE, R.string.line_senpai_question_mark)
+                    voiceLines[WHY_SAY_THAT] = VoiceLine(R.raw.huh_why_say, Mood.SIDED_WORRIED, R.string.line_huh_why_say)
+                    voiceLines[YOU_SURE] = VoiceLine(R.raw.you_sure, Mood.SIDED_WORRIED, R.string.line_you_sure)
+                    voiceLines[SENPAI_WHAT] = VoiceLine(R.raw.senpai_what_we_talkin, Mood.SIDED_WORRIED, R.string.line_senpai_what_we_talkin)
 
-                voiceLines[WHY_SAY_THAT] = VoiceLine(R.raw.huh_why_say, Mood.SIDED_WORRIED, R.string.line_huh_why_say)
-                voiceLines[YOU_SURE] = VoiceLine(R.raw.you_sure, Mood.SIDED_WORRIED, R.string.line_you_sure)
-                voiceLines[SENPAI_WHAT] = VoiceLine(R.raw.senpai_what_we_talkin, Mood.SIDED_WORRIED, R.string.line_senpai_what_we_talkin)
+                    voiceLines[NICE_TO_MEET_OKABE] = VoiceLine(R.raw.nice_to_meet_okabe, Mood.SIDED_PLEASANT, R.string.line_nice_to_meet_okabe)
+                    voiceLines[PLEASED_TO_MEET] = VoiceLine(R.raw.pleased_to_meet_you, Mood.SIDED_PLEASANT, R.string.line_pleased_to_meet_you)
 
-                voiceLines[NICE_TO_MEET_OKABE] = VoiceLine(R.raw.nice_to_meet_okabe, Mood.SIDED_PLEASANT, R.string.line_nice_to_meet_okabe)
-                voiceLines[PLEASED_TO_MEET] = VoiceLine(R.raw.pleased_to_meet_you, Mood.SIDED_PLEASANT, R.string.line_pleased_to_meet_you)
+                    //Winking
+                    voiceLines[NICE] = VoiceLine(R.raw.nice, Mood.WINKING, R.string.line_nice)
+                    voiceLines[HEHEHE] = VoiceLine(R.raw.heheh, Mood.WINKING, R.string.line_heheh)
+                    voiceLines[MEMORIES_CHRISTINA] = VoiceLine(R.raw.memories_christina, Mood.WINKING, R.string.line_memories_christina)
 
-                //Winking
-                voiceLines[NICE] = VoiceLine(R.raw.nice, Mood.WINKING, R.string.line_nice)
-                voiceLines[HEHEHE] = VoiceLine(R.raw.heheh, Mood.WINKING, R.string.line_heheh)
-                voiceLines[MEMORIES_CHRISTINA] = VoiceLine(R.raw.memories_christina, Mood.WINKING, R.string.line_memories_christina)
+                    //Happy
+                    voiceLines[HELLO] = VoiceLine(R.raw.hello, Mood.HAPPY, R.string.line_hello)
+                    voiceLines[ASK_ME] = VoiceLine(R.raw.ask_me_whatever, Mood.HAPPY, R.string.line_ask_me_whatever)
+                    voiceLines[COULD_I_HELP] = VoiceLine(R.raw.could_i_help, Mood.HAPPY, R.string.line_could_i_help)
+                    voiceLines[WHAT_DO_YOU_WANT] = VoiceLine(R.raw.what_do_you_want, Mood.HAPPY, R.string.line_what_do_you_want)
+                    voiceLines[WHAT_IS_IT] = VoiceLine(R.raw.what_is_it, Mood.HAPPY, R.string.line_what_is_it)
+                    voiceLines[LOOKING_FORWARD_TO_WORKING] = VoiceLine(R.raw.look_forward_to_working, Mood.HAPPY, R.string.line_look_forward_to_working)
+                    voiceLines[OK] = VoiceLine(R.raw.ok, Mood.HAPPY, R.string.line_ok)
 
-                //Happy
-                voiceLines[HELLO] = VoiceLine(R.raw.hello, Mood.HAPPY, R.string.line_hello)
-                voiceLines[ASK_ME] = VoiceLine(R.raw.ask_me_whatever, Mood.HAPPY, R.string.line_ask_me_whatever)
-                voiceLines[COULD_I_HELP] = VoiceLine(R.raw.could_i_help, Mood.HAPPY, R.string.line_could_i_help)
-                voiceLines[WHAT_DO_YOU_WANT] = VoiceLine(R.raw.what_do_you_want, Mood.HAPPY, R.string.line_what_do_you_want)
-                voiceLines[WHAT_IS_IT] = VoiceLine(R.raw.what_is_it, Mood.HAPPY, R.string.line_what_is_it)
-                voiceLines[LOOKING_FORWARD_TO_WORKING] = VoiceLine(R.raw.look_forward_to_working, Mood.HAPPY, R.string.line_look_forward_to_working)
-                voiceLines[OK] = VoiceLine(R.raw.ok, Mood.HAPPY, R.string.line_ok)
+                    //Blushing
+                    voiceLines[SENPAI_DONT_TELL] = VoiceLine(R.raw.senpai_please_dont_tell, Mood.BLUSH, R.string.line_senpai_please_dont_tell)
+                    voiceLines[STILL_NOT_HAPPY] = VoiceLine(R.raw.still_not_happy, Mood.BLUSH, R.string.line_still_not_happy)
+                    voiceLines[GAH_EXTENDED] = VoiceLine(R.raw.gah_extended, Mood.BLUSH, R.string.line_gah_extended)
 
-                //Blushing
-                voiceLines[SENPAI_DONT_TELL] = VoiceLine(R.raw.senpai_please_dont_tell, Mood.BLUSH, R.string.line_senpai_please_dont_tell)
-                voiceLines[STILL_NOT_HAPPY] = VoiceLine(R.raw.still_not_happy, Mood.BLUSH, R.string.line_still_not_happy)
-                voiceLines[GAH_EXTENDED] = VoiceLine(R.raw.gah_extended, Mood.BLUSH, R.string.line_gah_extended)
-
-                return voiceLines
+                    return voiceLines
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Log.e("VoiceLine", "Error loading voice lines: ${e.message}")
+                    return arrayOfNulls(0)
+                }
             }
         }
     }
