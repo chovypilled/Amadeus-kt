@@ -120,8 +120,8 @@ class Amadeus {
 
             try {
                 player = MediaPlayer.create(act, line.getId())
-                if (settings.getBoolean("show_subtitles", false)) {
-                    subs.text = act.getString(line.getSubtitle())
+                if (settings.getBoolean("show_subtitles", true)) {
+                    subs.setText(line.getSubtitle())
                 }
 
                 var res: Resources = act.resources
@@ -136,6 +136,13 @@ class Amadeus {
                     player.setOnCompletionListener {
                         player.release()
                         isSpeaking = false
+
+                        act.runOnUiThread(object: Runnable{
+                            override fun run() {
+                                kurisu.setImageDrawable(anim)
+                                //anim.start()
+                            }
+                        })
                     }
                     isSpeaking = true
                 }
