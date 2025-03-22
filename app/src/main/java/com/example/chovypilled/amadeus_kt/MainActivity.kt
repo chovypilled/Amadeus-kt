@@ -3,6 +3,7 @@ package com.example.chovypilled.amadeus_kt
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -22,6 +23,12 @@ class MainActivity : AppCompatActivity() {
         val subBackground: ImageView = findViewById(R.id.imageView_subtitles)
         val settings: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         //ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.RECORD_AUDIO), 1)
+
+        if (settings.getBoolean("show_subtitles", false)) {
+            subBackground.visibility = View.INVISIBLE
+        }
+
         Amadeus.speak(voiceLines[VoiceLine.Line.HELLO]!!, this)
+
     }
 }
