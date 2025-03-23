@@ -50,14 +50,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="35dp"
         android:layout_marginTop="29dp"
-        android:fontFamily="Droid"
+        android:fontFamily="@font/roboto_mono"
         android:gravity="start"
         android:shadowColor="#000"
         android:shadowRadius="2"
         android:textAlignment="gravity"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textColor="#FFF"
-        android:textSize="16.0sp"
+        android:textSize="20.0sp"
         android:typeface="monospace" />
 
 </RelativeLayout>

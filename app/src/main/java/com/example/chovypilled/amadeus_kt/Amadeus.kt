@@ -113,7 +113,7 @@ class Amadeus {
         }
 
         fun speak(line: VoiceLine, act: Activity) {
-            val anim: AnimationDrawable
+            lateinit var anim: AnimationDrawable
             val subs: TextView = act.findViewById(R.id.textView_subtitles)
             val kurisu: ImageView = act.findViewById(R.id.imageView_kurisu)
             var settings: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(act)
@@ -131,21 +131,23 @@ class Amadeus {
                     player.stop()
                     player.release()
                     player = MediaPlayer()
-                } else {
-                    player.start()
-                    player.setOnCompletionListener {
-                        player.release()
-                        isSpeaking = false
-
-                        act.runOnUiThread(object: Runnable{
-                            override fun run() {
-                                kurisu.setImageDrawable(anim)
-                                //anim.start()
-                            }
-                        })
-                    }
-                    isSpeaking = true
                 }
+
+                act.runOnUiThread {
+                    kurisu.setImageDrawable(anim.getFrame(0))
+                }
+
+                player.start()
+                player.setOnCompletionListener {
+                    player.release()
+                    isSpeaking = false
+
+                    act.runOnUiThread {
+                        kurisu.setImageDrawable(anim.getFrame(0))
+                       // anim.start()
+                    }
+                }
+                isSpeaking = true
 
             } catch (e: Exception) {
                 Log.e("Amadeus", "Error in speak(line, act): ${e.message}")

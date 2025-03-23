@@ -39,19 +39,18 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        Amadeus.isLooping = true
-        handler.post(loop)
 
 
-//        kurisu.setOnLongClickListener(View.OnLongClickListener{
-//            if (!Amadeus.isLooping && !Amadeus.isSpeaking) {
-//                handler.post(loop)
-//                Amadeus.isLooping = true
-//            } else {
-//                handler.removeCallbacks(loop)
-//                Amadeus.isLooping = false
-//            }
-//            true
-//        })
+        kurisu.setOnLongClickListener {
+            if (!Amadeus.isLooping && !Amadeus.isSpeaking) {
+                handler.post(loop)
+                Amadeus.isLooping = true
+            } else {
+                handler.removeCallbacks(loop)
+                Amadeus.isLooping = false
+
+            }
+            true
+        }
     }
 }
