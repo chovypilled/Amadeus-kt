@@ -1,3 +1,8 @@
+# Update 2025/04/07
+I'm still working on this, but I am looking for some help with voicelines. The gist of it is - the original project used Visualizer to animate the lips, which is not the most efficient approach and requires record audio permissions. I'd like to not require record audio permissions, so I'm working on analyzing each voiceline file separately to have concrete timing data for the animations. 
+
+This approach is working out well but unfortunately, the Ogg files really vary in quality and amplitude, so it's difficult to calculate exact speech intensity. I will still use them for now, but if you have high quality, labeled Amadeus lines from the game itself, it would be gladly appreciated.
+
 # Note from me, chovypilled
 This is a remake/reimagining of <a href=https://github.com/Yink>Yink's</a> Amadeus project written in Kotlin. As it was for him, this is just a side project so I might take longer than expected.   
   
