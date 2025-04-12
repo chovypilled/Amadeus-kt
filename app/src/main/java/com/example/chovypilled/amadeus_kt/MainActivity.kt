@@ -15,7 +15,6 @@ import kotlin.random.Random
 
 
 class MainActivity : AppCompatActivity() {
-    // I will fix most of this later
     val voiceLines = VoiceLine.Line.getLines()
     private lateinit var speak: (line: VoiceLine, activity: MainActivity) -> Unit
 
@@ -44,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         val logo: ImageView = findViewById(R.id.imageView_logo_small)
         val settings: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.RECORD_AUDIO), 1)
-        chooseSpeakFunc()
+        chooseSpeakFunc() // needs restart to take effect, I'll fix this later
 
         if (settings.getBoolean("show_subtitles", false)) {
             subBackground.visibility = View.INVISIBLE
@@ -58,12 +57,12 @@ class MainActivity : AppCompatActivity() {
         val loop: Runnable = object : Runnable {
             override fun run() {
                 if (Amadeus.isLooping) {
-                    speak(voiceLines[rng.nextInt(voiceLines.size)]!!, this@MainActivity)
-                    handler.postDelayed(this, ((5000 + rng.nextInt(5) * 1000).toLong()))
+                    Log.d("MainActivity", "Looping")
+                        speak(voiceLines[rng.nextInt(voiceLines.size)]!!, this@MainActivity)
+                        handler.postDelayed(this, ((5000 + rng.nextInt(5) * 1000).toLong()))
                 }
             }
         }
-
 
         kurisu.setOnLongClickListener {
             Log.d("MainActivity", "Long click on Kurisu")
@@ -89,15 +88,6 @@ class MainActivity : AppCompatActivity() {
 
         logo.setOnLongClickListener {
             Log.d("MainActivity", "Long click on logo")
-            if (!Amadeus.isLooping && !Amadeus.isSpeaking) {
-                speak(voiceLines[VoiceLine.Line.GAH]!!, this@MainActivity)
-            } else {
-                Log.d("MainActivity", "Looping stopped")
-                handler.removeCallbacks(loop)
-                Amadeus.isLooping = false
-                speak(voiceLines[VoiceLine.Line.GAH]!!, this@MainActivity)
-
-            }
             true
         }
 
@@ -107,16 +97,7 @@ class MainActivity : AppCompatActivity() {
 
         subBackground.setOnLongClickListener {
             Log.d("MainActivity", "Long click on subtitles")
-            if (!Amadeus.isLooping && !Amadeus.isSpeaking) {
-                speak(voiceLines[VoiceLine.Line.GAH_EXTENDED]!!, this@MainActivity)
-            } else {
-                Log.d("MainActivity", "Looping stopped")
-                handler.removeCallbacks(loop)
-                Amadeus.isLooping = false
-                speak(voiceLines[VoiceLine.Line.GAH_EXTENDED]!!, this@MainActivity)
-            }
             true
         }
-
     }
 }

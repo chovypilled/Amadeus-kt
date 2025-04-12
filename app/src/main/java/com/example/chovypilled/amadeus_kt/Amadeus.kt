@@ -171,6 +171,11 @@ class Amadeus {
                 var res = act.resources
                 anim = Drawable.createFromXml(res, res.getXml(line.getMood())) as AnimationDrawable
 
+                if (isSpeaking) {
+                    Log.w("Amadeus", "Already speaking, skipping new line")
+                    return
+                }
+
                 if (player.isPlaying) {
                     player.stop()
                     player.release()
@@ -210,6 +215,7 @@ class Amadeus {
 
                             val normalized: Float = sum / waveform.size.toFloat()
 
+                            Log.d("Amadeus", "Visualizing line: ${res.getText(line.getSubtitle())}")
                             act.runOnUiThread {
                                 if (normalized > 50) {
                                     kurisu.setImageDrawable(anim.getFrame(Math.ceil(Math.random() * 2)
