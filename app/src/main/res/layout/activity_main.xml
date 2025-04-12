@@ -17,9 +17,20 @@
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="7dp"
-        android:layout_marginBottom="-120dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="-152dp"
         android:src="@drawable/kurisu_happy1" />
+
+    <ImageView
+        android:id="@+id/imageView_subtitles"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/subtitle_frame_big" />
 
     <ImageView
         android:id="@+id/imageView_logo_small"
@@ -30,17 +41,6 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="26dp"
         android:src="@drawable/amadeus_icon_smaller" />
-
-    <ImageView
-        android:id="@+id/imageView_subtitles"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="-2dp"
-        android:layout_marginBottom="-13dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/subtitle_frame_big" />
 
     <TextView
         android:id="@+id/textView_subtitles"

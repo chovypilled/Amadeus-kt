@@ -39,6 +39,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.media3.common.ktx)
     val preference_version = "1.2.1"
 
     implementation(libs.androidx.core.ktx)

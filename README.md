@@ -1,6 +1,3 @@
-# Update 2025/04/12
-I gave up on trying to use pre-analysed audio and am just going to keep the requirement for record audio permissions... It seems like Visualizer is the best way to have accurate (enough) animations.
-
 # Note from me, chovypilled
 This is a remake/reimagining of <a href=https://github.com/Yink>Yink's</a> Amadeus project written in Kotlin. As it was for him, this is just a side project so I might take longer than expected.   
   
@@ -35,7 +32,7 @@ To start speech recognition simply touch her once. If you long-click her, she wi
 # HOW TO INSTALL
 <ol>
   <li>Download the <b>amadeus.apk</b> from <a href="https://github.com/Yink/Amadeus/releases">here</a> to your phone (you only need this file).</li>
-<li>Make sure to have <b>installation from unknown sources</b> activated in your phone's security settings (<a href="https://www.wikihow.tech/Install-APK-Files-on-Android">How-to<a>)</li>
+<li>Make sure to have <b>installation from unknown sources</b> activated in your phone's security settings (<a href="https://www.wikihow.tech/Install-APK-Files-on-Android">How-to</a>)</li>
 <li>Click on <b>amadeus.apk</b> on your phone to install it</li>
 <li>Choose your preferred settings by clicking on the "Amadeus" logo</li>
 </ol>

@@ -113,7 +113,7 @@ class Amadeus {
         }
 
         fun speak(line: VoiceLine, act: Activity) {
-            lateinit var anim: AnimationDrawable
+            val anim: AnimationDrawable
             val subs: TextView = act.findViewById(R.id.textView_subtitles)
             val kurisu: ImageView = act.findViewById(R.id.imageView_kurisu)
             var settings: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(act)
@@ -127,7 +127,7 @@ class Amadeus {
                 var res: Resources = act.resources
                 anim = Drawable.createFromXml(res, res.getXml(line.getMood())) as AnimationDrawable
 
-                if (player.isPlaying()) {
+                if (player.isPlaying) {
                     player.stop()
                     player.release()
                     player = MediaPlayer()
@@ -144,13 +144,94 @@ class Amadeus {
 
                     act.runOnUiThread {
                         kurisu.setImageDrawable(anim.getFrame(0))
-                       // anim.start()
+                        // anim.start()
                     }
                 }
                 isSpeaking = true
 
             } catch (e: Exception) {
                 Log.e("Amadeus", "Error in speak(line, act): ${e.message}")
+            }
+        }
+
+        fun speakVisualizer(line: VoiceLine, act: Activity) {
+            val anim: AnimationDrawable
+            val subs: TextView = act.findViewById(R.id.textView_subtitles)
+            val kurisu: ImageView = act.findViewById(R.id.imageView_kurisu)
+            var settings: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(act)
+
+            try {
+                player = MediaPlayer.create(act, line.getId())
+                val v: Visualizer = Visualizer(player.audioSessionId)
+
+                if (settings.getBoolean("show_subtitles", true)) {
+                    subs.setText(line.getSubtitle())
+                }
+
+                var res = act.resources
+                anim = Drawable.createFromXml(res, res.getXml(line.getMood())) as AnimationDrawable
+
+                if (player.isPlaying) {
+                    player.stop()
+                    player.release()
+                    v.enabled = false
+                    player = MediaPlayer()
+                }
+
+                player.setOnPreparedListener {
+                    isSpeaking = true
+                    player.start()
+                    v.enabled = true
+                }
+
+                player.setOnCompletionListener {
+                    isSpeaking = false
+                    player.release()
+                    v.enabled = false
+
+                    act.runOnUiThread {
+                        kurisu.setImageDrawable(anim.getFrame(0))
+                    }
+                }
+
+                v.enabled = false
+                v.captureSize = Visualizer.getCaptureSizeRange()[1]
+                v.setDataCaptureListener(
+                    object : Visualizer.OnDataCaptureListener {
+                        override fun onWaveFormDataCapture(
+                            visualizer: Visualizer?,
+                            waveform: ByteArray?,
+                            samplingRate: Int
+                        ) {
+                            var sum: Int = 0
+                            for (i in 1 until waveform!!.size) {
+                                sum += waveform[i] + 128
+                            }
+
+                            val normalized: Float = sum / waveform.size.toFloat()
+
+                            act.runOnUiThread {
+                                if (normalized > 50) {
+                                    kurisu.setImageDrawable(anim.getFrame(Math.ceil(Math.random() * 2)
+                                        .toInt()))
+                                } else {
+                                    kurisu.setImageDrawable(anim.getFrame(0))
+                                }
+                            }
+                        }
+
+                        override fun onFftDataCapture(
+                            visualizer: Visualizer?,
+                            fft: ByteArray?,
+                            samplingRate: Int
+                        ) {
+                            // Do nothing
+                        }
+                    }, Visualizer.getMaxCaptureRate() / 2, true, false
+                )
+
+            } catch (e: Exception) {
+                Log.e("Amadeus", "Error in speakVisualizer(line, act): ${e.message}")
             }
         }
     }
