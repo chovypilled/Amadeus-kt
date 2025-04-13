@@ -8,8 +8,11 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import kotlin.random.Random
 
@@ -17,13 +20,10 @@ import kotlin.random.Random
 class MainActivity : AppCompatActivity() {
     val voiceLines = VoiceLine.Line.getLines()
     private lateinit var speak: (line: VoiceLine, activity: MainActivity) -> Unit
+    private lateinit var permissionLauncher: ActivityResultLauncher<String>
 
-    private fun hasPermissions(): Boolean {
-        return ActivityCompat.checkSelfPermission(this, android.Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
-    }
-
-    private fun chooseSpeakFunc() {
-        speak = if (hasPermissions()) {
+    private fun chooseSpeakFunc(granted: Boolean) {
+        speak = if (granted) {
             { line, activity ->
                 Amadeus.speakVisualizer(line, activity)
             }
@@ -42,8 +42,22 @@ class MainActivity : AppCompatActivity() {
         val subBackground: ImageView = findViewById(R.id.imageView_subtitles)
         val logo: ImageView = findViewById(R.id.imageView_logo_small)
         val settings: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.RECORD_AUDIO), 1)
-        chooseSpeakFunc() // needs restart to take effect, I'll fix this later
+        permissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+            chooseSpeakFunc(isGranted)
+            if (isGranted) {
+                recreate()
+            }
+        }
+
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECORD_AUDIO)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            permissionLauncher.launch(android.Manifest.permission.RECORD_AUDIO)
+        } else {
+            chooseSpeakFunc(true)
+        }
 
         if (settings.getBoolean("show_subtitles", false)) {
             subBackground.visibility = View.INVISIBLE
@@ -51,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val rng = Random(System.currentTimeMillis())
-        speak(voiceLines[VoiceLine.Line.HELLO]!!, this)
+        Amadeus.speak(voiceLines[VoiceLine.Line.HELLO]!!, this)
 
         val handler = Handler(Looper.getMainLooper())
         val loop: Runnable = object : Runnable {
